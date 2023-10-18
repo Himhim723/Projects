@@ -21,7 +21,7 @@ public class UserControllerImpl implements UserController {
   private UserService userService;
 
   @Override
-  public ApiResp<UserDTO> signUp(@RequestBody UserSignUpDTO user) throws UserException {
+  public ApiResp<UserDTO> signUp(UserSignUpDTO user) throws UserException {
     return ApiResp.<UserDTO>builder().ok().data(userService.signUp(user)).build();
   }
 

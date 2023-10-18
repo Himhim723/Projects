@@ -18,7 +18,7 @@ public class UserMapper {
   private ModelMapper modelMapper;
 
   public User map(UserSignUpDTO user){
-    return User.builder().username(user.getUserName())
+    return User.builder().username(user.getUsername())
                          .password(user.getPassword())
                          .fullName(user.getFullName())
                          .gender(user.getGender())

@@ -26,13 +26,13 @@ public interface UserRepository extends JpaRepository<User,Long>{
   // select * from Users where username = username
   Optional<User> findByUsername (String username);
 
-  //Native Query
+  // //Native Query
   @Query(nativeQuery = true,
-  value = "SELECT * FROM USERS U WHERE U.ROLE = :role")
+  value = "select u from users u where u.role = :role")
   List<User> findByRole(@Param(value = "role") String role);
 
-  //JPQL
-  @Query(value = "select u.* from Users u where u.gender =:gender")
+  // //JPQL
+  @Query(value = "select u from User u where u.gender = :gender")
   List<User> findByGender(@Param(value = "gender") String gender);
 
   

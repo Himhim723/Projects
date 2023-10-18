@@ -1,5 +1,7 @@
 package com.user.basicusermanagement.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +28,14 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public UserDTO signUp(UserSignUpDTO user) throws UserException {
-    isUsernameValid(user.getUserName());
+    isUsernameValid(user.getUsername());
     isPasswordValid(user.getPassword());
-    isEmailValid(user.getUserName());
+    isEmailValid(user.getEmail());
     try{
-      userExisted(user.getUserName());
-      User userModel = userRepository.save(userMapper.map(user));
+      userExisted(user.getUsername());
+      User userModel = userMapper.map(user);
+      userModel.setLastLogIn(LocalDateTime.now());
+      userRepository.save(userModel);
       return userMapper.map(userModel);
     }catch(UserExistedException e){
       throw new UserExistedException(Code.ALREADY_EXIST);
@@ -44,19 +48,24 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
-  public UserDTO authenticationUser (UserLoginDTO user) throws UserException{
-    try{
-      validateUser(user);
-    }catch(UserException e){
-      throw new UserException(Code.VALIDATOR_FAILURE);
-    }
-    return getProfile(user.getUsername());
+  public UserDTO authenticationUser(UserLoginDTO user) throws UserException{
+    // try{
+    //   // validateUser(user);
+    //   // User userModel = findUserByUsername(user.getUsername());
+    //   // userModel.setLastLogIn(LocalDateTime.now());
+    //   // userRepository.save(userModel);
+    // }catch(UserException e){
+    //   System.out.println("Error made here");
+    //   throw new UserException(Code.VALIDATOR_FAILURE);
+    // }
+    System.out.println("USERS = "+ user.getUsername());
+    return userMapper.map(findUserByUsername(user.getUsername()));
   }
 
   @Override
   public UserDTO adjustProfile(UserSignUpDTO user) {
     isEmailValid(user.getEmail());
-    User oldUser = findUserByUsername(user.getUserName());
+    User oldUser = findUserByUsername(user.getUsername());
     oldUser.setFullName(user.getFullName());
     oldUser.setGender(user.getGender());
     oldUser.setDob(user.getDob());
@@ -109,7 +118,7 @@ public class UserServiceImpl implements UserService{
    * @return true or false
    * @throws UserException
    */
-  boolean userExisted(String username) throws UserException{
+  public boolean userExisted(String username) throws UserException{
     if(userRepository.findAll().stream().filter(e->e.getUsername().equals(username)).findAny().isPresent())
     throw new UserExistedException(Code.ALREADY_EXIST);
     return true;
@@ -120,7 +129,7 @@ public class UserServiceImpl implements UserService{
    * @param username
    * @return User
    */
-  User findUserByUsername(String username){
+  public User findUserByUsername(String username){
     return userRepository.findAll().stream().filter(e->e.getUsername().equals(username)).findAny().orElseThrow(()-> new EntityNotFoundException());
   }
 
@@ -130,7 +139,7 @@ public class UserServiceImpl implements UserService{
    * @return Long ID of User
    * for adjusting information of User
    */
-  Long findUserIdByUsername(String username){
+  public Long findUserIdByUsername(String username){
     return findUserByUsername(username).getUserID();
   }
 
@@ -150,23 +159,24 @@ public class UserServiceImpl implements UserService{
   //Other types of email are not available for the registration
   String[] emailFormat = new String[]{"@gmail.com","@icloud.com","@hotmail.com","@hotmail.com.hk"};
 
-  boolean isEmailValid(String email){
+  public boolean isEmailValid(String email){
     for(String format: emailFormat)
-    if(email.endsWith(format)) return true;
-    throw new IllegalArgumentException();
+      if(email.contains(format)) return true;
+    throw new IllegalArgumentException("invalid email");
   }
 
-  boolean isUsernameValid(String username){
-    return username.length()>=6;
+  public boolean isUsernameValid(String username){
+    if(username.length()>=6) return true;
+    else throw new IllegalArgumentException("InValid Username");
   }
 
-  boolean isPasswordValid(String password){
+  public boolean isPasswordValid(String password){
     char[] letter = password.toCharArray();
     int len = letter.length;
     if(len<6||len>15) 
     throw new IllegalArgumentException();
     else if (!password.matches(".*[A-Z].*") || !password.matches(".*[a-z].*") || !password.matches(".*\\d.*")) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Invalid Password");
     } else 
       return true;
   

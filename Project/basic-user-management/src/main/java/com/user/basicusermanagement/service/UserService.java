@@ -71,4 +71,10 @@ public interface UserService {
    * @param address Adjust the address according to the data client provided
    */
   void adjustAddress(String username,String address);
+
+  boolean isEmailValid(String email);
+
+  boolean isUsernameValid(String username);
+
+  boolean isPasswordValid(String password);
 }

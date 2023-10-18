@@ -40,6 +40,7 @@ public class User implements Serializable{
   private String role;
   @Column(name = "reg_date_time")
   private LocalDateTime regDateTime;
+  private LocalDateTime lastLogIn;
 
   public int getAge(){
     LocalDate now = LocalDate.now();
