@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenRice Demo</title>
+</head>
+<body>
+  <h1>Welcome to OpenRiceDemo</h1>
+
+  <!-- Sign Up Form -->
+  <!-- Sign Up Form -->
+  <h2>Sign Up</h2>
+  <form id="signupForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Sign Up">
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      $("#signupForm").submit(function(event) {
+        event.preventDefault();
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        $.ajax({
+          url: "/signup", // Replace with your backend URL
+          method: "POST",
+          data: { username: username, password: password },
+          success: function(response) {
+            // Handle successful response from the backend
+            console.log(response);
+          },
+          error: function(error) {
+            // Handle error response from the backend
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+  <!-- Delete Account Form -->
+  <h2>Delete Account</h2>
+  <form id="deleteAccountForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <input type="submit" value="Delete Account">
+  </form>
+
+  <!-- Adjust Password Form -->
+  <h2>Adjust Password</h2>
+  <form id="adjustPasswordForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">New Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Adjust Password">
+  </form>
+
+  <!-- Add Shop Form -->
+  <h2>Add Shop</h2>
+  <form id="addShopForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="shopName">Shop Name:</label>
+    <input type="text" id="shopName" name="shopName" required><br><br>
+
+    <input type="submit" value="Add Shop">
+  </form>
+
+  <!-- Find My Shops -->
+  <h2>Find My Shops</h2>
+  <form id="findMyShopsForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <input type="submit" value="Find My Shops">
+  </form>
+
+  <!-- Find My Shop by Name -->
+  <h2>Find My Shop by Name</h2>
+  <form id="findMyShopForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="shopName">Shop Name:</label>
+    <input type="text" id="shopName" name="shopName" required><br><br>
+
+    <input type="submit" value="Find My Shop">
+  </form>
+
+  <!-- Add Food to Shop -->
+  <h2>Add Food to Shop</h2>
+  <form id="addFoodToShopForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="shopName">Shop Name:</label>
+    <input type="text" id="shopName" name="shopName" required><br><br>
+
+    <!-- Food input fields can be added dynamically using JavaScript -->
+    <div id="foodInputs">
+      <label for="food1">Food:</label>
+      <input type="text" id="food1" name="food1" required><br><br>
+    </div>
+
+    <button type="button" onclick="addFoodInput()">Add Food</button><br><br>
+
+    <input type="submit" value="Add Food">
+  </form>
+
+  <!-- Delete Food from Shop -->
+  <h2>Delete Food from Shop</h2>
+  <form id="deleteFoodFromShopForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="shopName">Shop Name:</label>
+    <input type="text" id="shopName" name="shopName" required><br><br>
+
+    <label for="foodId">Food ID:</label>
+    <input type="number" id="foodId" name="foodId" required><br><br>
+
+    <input type="submit" value="Delete Food">
+  </form>
+
+  <!-- Adjust Food Price -->
+  <h2>Adjust Food Price</h2>
+  <form id="adjustPriceForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="shopName">Shop Name:</label>
+    <input type="text" id="shopName" name="shopName" required><br><br>
+
+    <label for="foodId">Food ID:</label>
+    <input type="number" id="foodId" name="foodId" required><br><br>
+
+    <label for="newPrice">New Price:</label>
+    <input type="number" id="newPrice" name="newPrice" required><br><br>
+
+    <input type="submit" value="Adjust Price">
+  </form>
+
+  <!-- JavaScript Function to Add Food Input Fields Dynamically -->
+  <script>
+    let foodCount = 1;
+
+    function addFoodInput() {
+      foodCount++;
+      const foodInputs = document.getElementById("foodInputs");
+      const newFoodInput = document.createElement("div");
+      newFoodInput.innerHTML = `
+        <label for="food${foodCount}">Food:</label>
+        <input type="text" id="food${foodCount}" name="food${foodCount}" required><br><br>
+      `;
+      foodInputs.appendChild(newFoodInput);
+    }
+  </script>
+</body>
+</html>
