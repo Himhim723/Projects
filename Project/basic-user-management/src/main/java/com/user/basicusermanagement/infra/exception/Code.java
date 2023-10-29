@@ -24,7 +24,7 @@ public enum Code {
       if (c.code == code) {
         return c;
       }
-    }
+    } 
     throw new IllegalArgumentException(); 
     //if no the code does not match one of these error code
   }

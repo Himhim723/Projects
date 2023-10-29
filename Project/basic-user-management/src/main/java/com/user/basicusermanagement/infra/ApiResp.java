@@ -4,6 +4,7 @@ import com.user.basicusermanagement.infra.exception.Code;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+
 public class ApiResp<T> {
   // attribute name by default same as JSON field name after serialziation
   @Schema (description = "Code For System Response Cat")
@@ -59,6 +60,14 @@ public class ApiResp<T> {
       this.message = Code.OK.getDesc();
       return this;
     }
+
+    public ApiResponseBuilder<T> ok(T data) {
+      this.code = Code.OK.getCode();
+      this.message = Code.OK.getDesc();
+      this.data = data;
+      return this;
+    }
+    
 
     public ApiResponseBuilder<T> data(T data) {
       this.data = data;

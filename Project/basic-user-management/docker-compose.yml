@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    domainname: postgres
+    environment:
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  user-sys:
+    image: user-sys
+    build:
+      context: ./basic-user-management
+      dockerfile: Dockerfile
+    ports: 
+      - 8181:8081
+

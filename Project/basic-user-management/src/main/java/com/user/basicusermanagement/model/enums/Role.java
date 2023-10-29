@@ -1,25 +1,37 @@
 package com.user.basicusermanagement.model.enums;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collections;
+import java.util.List;
+
 import lombok.Getter;
+
+import static com.user.basicusermanagement.model.enums.Permission.*;
 
 @Getter
 public enum Role {
-  ADMIN("Admin"),
-  REGULAR("Regular"),
-  PREMIUM("Premium");
+  USER(Collections.emptySet()),
+  ADMIN(Set.of(ADMIN_READ,
+               ADMIN_UPDATE,
+               ADMIN_DELETE,
+               ADMIN_CREATE));
 
-  private String desc;
+  private final Set<Permission> permissions;
 
-  private Role(String desc){
-    this.desc = desc;
+  private Role(Set<Permission> permission){
+        this.permissions = permission;
   }
 
-  public static Role getRole(String role){
-    for(Role r: Role.values()){
-      if (r.getDesc().equals(role))
-      return r;
-    }
-    throw new IllegalArgumentException("Invalid Role");
+  public List<SimpleGrantedAuthority> getAuthorities() {
+    List<SimpleGrantedAuthority> authorities = getPermissions()
+            .stream()
+            .map(permission -> new SimpleGrantedAuthority(permission.name()))
+            .collect(Collectors.toList());
+    authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+    return authorities;
   }
-
 }

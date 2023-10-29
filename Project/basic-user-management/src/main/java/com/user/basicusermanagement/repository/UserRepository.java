@@ -24,6 +24,8 @@ public interface UserRepository extends JpaRepository<User,Long>{
 
   //Hibernate SQL convertion help us to generate the SQL statement according to which database Driver using
   // select * from Users where username = username
+  
+  
   Optional<User> findByUsername (String username);
 
   // //Native Query

@@ -16,6 +16,7 @@ import lombok.ToString;
 @Setter
 @Builder
 @EqualsAndHashCode
+@ToString
 public class UserDTO {
   private Long userID;
   private String role;

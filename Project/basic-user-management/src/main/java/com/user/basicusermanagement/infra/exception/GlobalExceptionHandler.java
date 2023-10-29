@@ -12,7 +12,16 @@ import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-  
+
+  @ExceptionHandler(value = EntityNotFoundException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ApiResp<Void> userExistedHandler(EntityNotFoundException e) {
+    return ApiResp.<Void>builder() //
+        .status(getRespCode(e)) //
+        .data(null) //
+        .build();
+  }
+
   @ExceptionHandler(value = UserExistedException.class)
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ApiResp<Void> userExistedHandler(UserExistedException e) {
@@ -26,7 +35,7 @@ public class GlobalExceptionHandler {
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ApiResp<Void> runtimeExceptionHandler(RuntimeException e) {
     return ApiResp.<Void>builder() //
-        .status(getRespCode(e)) //
+        .status(Code.VALIDATOR_FAILURE) //
         .concatMessageIfPresent(e.getMessage()).data(null) //
         .build();
   }
@@ -35,7 +44,7 @@ public class GlobalExceptionHandler {
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ApiResp<Void> exceptionHandler(Exception e) {
     return ApiResp.<Void>builder() //
-        .status(getRespCode(e)) //
+        .status(Code.IAE_EXCEPTION) //
         .concatMessageIfPresent(e.getMessage()).data(null) //
         .build();
   }

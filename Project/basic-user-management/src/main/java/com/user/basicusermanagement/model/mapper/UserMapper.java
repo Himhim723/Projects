@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.user.basicusermanagement.model.User;
@@ -26,7 +27,7 @@ public class UserMapper {
                          .email(user.getEmail())
                          .address(user.getAddress())
                          .contact(user.getContact())
-                         .role(Role.REGULAR.getDesc())
+                         .role(Role.USER)
                          .regDateTime(LocalDateTime.now())
                          .build();
   }
