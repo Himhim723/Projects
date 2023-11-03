@@ -5,9 +5,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.user.basicusermanagement.model.User;
 import com.user.basicusermanagement.model.enums.Role;
 
 public class UserAgeCalTest {

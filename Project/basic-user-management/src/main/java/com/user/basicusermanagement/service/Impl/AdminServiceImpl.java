@@ -2,13 +2,11 @@ package com.user.basicusermanagement.service.Impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.user.basicusermanagement.infra.exception.UserException;
 import com.user.basicusermanagement.model.User;
 import com.user.basicusermanagement.model.enums.Role;
-import com.user.basicusermanagement.repository.UserRepository;
 import com.user.basicusermanagement.service.AdminService;
 
 @Service

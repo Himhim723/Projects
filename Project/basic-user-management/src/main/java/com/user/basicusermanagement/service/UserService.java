@@ -2,8 +2,6 @@ package com.user.basicusermanagement.service;
 
 import java.security.Principal;
 
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.user.basicusermanagement.infra.AuthenticationResponse;
 import com.user.basicusermanagement.infra.exception.UserException;
 import com.user.basicusermanagement.model.User;
