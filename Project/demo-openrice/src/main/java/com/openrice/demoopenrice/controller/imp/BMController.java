@@ -17,7 +17,7 @@ import com.openrice.demoopenrice.model.Comment;
 import com.openrice.demoopenrice.model.Food;
 
 public interface BMController {
-  @PostMapping(value = "/signU") //success
+  @PostMapping(value = "/signUp") //success
   Member signUp(@RequestBody Member member);
 
   @DeleteMapping(value = "/home/{username}")  //success

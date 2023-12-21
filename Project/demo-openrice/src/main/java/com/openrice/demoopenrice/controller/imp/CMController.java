@@ -20,6 +20,7 @@ import com.openrice.demoopenrice.model.CustomerSignUp;
 public interface CMController {
   @PostMapping(value = "/signUp")  //success
   CMember signUp(@RequestBody CustomerSignUp member);
+  
   @PutMapping(value = "/home/setting/{username}")  //success
   CMember adjustInfo(@PathVariable String username, @RequestBody CustomerSignUp member);
   @DeleteMapping(value = "/home/setting/{username}") // success
